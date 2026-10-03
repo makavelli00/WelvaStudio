@@ -114,7 +114,7 @@ export function Hero() {
         >
           <span className="label text-muted">Scroll</span>
           <span className="relative block h-10 w-px overflow-hidden bg-line">
-            <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_1.8s_ease-in-out_infinite] bg-accent" />
+            <span className="scroll-cue absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_1.8s_ease-in-out_infinite] bg-accent" />
           </span>
           <span className="label text-muted">España · 2026</span>
         </div>

@@ -2,7 +2,7 @@
 
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
-import { getLenis, markIntroDone, prefersReducedMotion } from "@/lib/motion";
+import { getLenis, INTRO_SEEN_KEY, markIntroDone, prefersReducedMotion } from "@/lib/motion";
 
 // Pantalla de carga inicial: contador + logo, después se retira hacia arriba.
 export function Preloader() {
@@ -16,7 +16,18 @@ export function Preloader() {
       el.style.display = "none";
     };
 
-    if (prefersReducedMotion() || window.__welvaIntroDone) {
+    // Solo una vez por sesión. layout.tsx pone .intro-seen antes de pintar,
+    // así que en visitas siguientes el CSS ya lo oculta sin parpadeo.
+    const seen = document.documentElement.classList.contains("intro-seen");
+    const rememberSeen = () => {
+      try {
+        sessionStorage.setItem(INTRO_SEEN_KEY, "1");
+      } catch {
+        // Sin almacenamiento: se volverá a mostrar en la próxima carga.
+      }
+    };
+
+    if (prefersReducedMotion() || window.__welvaIntroDone || seen) {
       hide();
       markIntroDone();
       return;
@@ -37,6 +48,7 @@ export function Preloader() {
           onComplete: () => {
             hide();
             unlock();
+            rememberSeen();
           },
         })
         .from(".pre-word", { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.08 })
@@ -67,7 +79,7 @@ export function Preloader() {
   return (
     <div
       ref={root}
-      className="fixed inset-0 z-[95] flex flex-col justify-between bg-[#0b0b0a] p-5 text-[#eeece5] motion-reduce:hidden sm:p-10"
+      className="preloader fixed inset-0 z-[95] flex flex-col justify-between bg-[#0b0b0a] p-5 text-[#eeece5] motion-reduce:hidden sm:p-10"
       style={{ clipPath: "inset(0% 0% 0% 0%)" }}
       aria-hidden
     >

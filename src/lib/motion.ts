@@ -8,9 +8,15 @@ export const setLenis = (instance: Lenis | null) => {
 
 export const getLenis = () => lenis;
 
+// Reduce el movimiento si lo pide el sistema o si el usuario lo ha desactivado
+// con el interruptor de la web (clase puesta antes de pintar en layout.tsx).
 export const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    document.documentElement.classList.contains("reduce-motion"));
+
+export const MOTION_STORAGE_KEY = "welva-motion";
+export const INTRO_SEEN_KEY = "welva-intro-seen";
 
 // La animación de entrada del hero espera a que termine el preloader.
 export const INTRO_EVENT = "welva:intro";

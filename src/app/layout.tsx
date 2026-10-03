@@ -44,7 +44,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         {/* Marca que hay JS antes de pintar, para ocultar lo que se va a animar. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('welva-motion')==='off')d.classList.add('reduce-motion');if(sessionStorage.getItem('welva-intro-seen'))d.classList.add('intro-seen')}catch(e){}",
+          }}
+        />
       </head>
       <body>
         <a

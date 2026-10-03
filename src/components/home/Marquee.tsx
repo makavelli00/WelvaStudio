@@ -45,7 +45,9 @@ export function Marquee({ items = marquee, className = "" }: { items?: readonly 
   const row = [...items, ...items];
 
   return (
-    <div className={`relative overflow-hidden border-y border-line py-6 ${className}`} aria-label={items.join(", ")}>
+    <div className={`relative overflow-hidden border-y border-line py-6 ${className}`}>
+      {/* aria-label en un div genérico no se anuncia: el texto va oculto visualmente. */}
+      <p className="sr-only">{items.join(", ")}</p>
       <div ref={track} className="marquee-track" aria-hidden>
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0">

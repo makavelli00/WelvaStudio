@@ -71,8 +71,11 @@ export function Stickers() {
         <span>(Playground)</span>
         <span>Arrástralos · Lánzalos</span>
       </div>
+      {/* Decorativo: no aporta información ni función, así que se oculta a
+          lectores de pantalla y no necesita alternativa al arrastre. */}
       <div
         ref={root}
+        aria-hidden
         className="relative h-[24rem] overflow-hidden rounded-sm border border-dashed border-line sm:h-[28rem]"
       >
         <span className="display pointer-events-none absolute inset-0 flex items-center justify-center text-[clamp(3rem,12vw,10rem)] text-fg/[0.04]">

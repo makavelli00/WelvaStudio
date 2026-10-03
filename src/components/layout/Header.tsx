@@ -29,6 +29,8 @@ export function Header() {
     if (open) lenis?.stop();
     else lenis?.start();
     document.documentElement.style.overflow = open ? "hidden" : "";
+    // Con el menú abierto, el teclado no debe llegar al contenido de detrás.
+    for (const el of document.querySelectorAll<HTMLElement>("main, footer")) el.inert = open;
 
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
@@ -38,7 +40,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,backdrop-filter] duration-700 ease-out-expo ${
+        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,backdrop-filter] duration-700 ease-out-expo focus-within:translate-y-0 ${
           hidden && !open ? "-translate-y-full" : "translate-y-0"
         } ${scrolled && !open ? "bg-bg/70 backdrop-blur-xl" : ""}`}
       >
@@ -49,7 +51,7 @@ export function Header() {
         >
           <Link
             href="/#inicio"
-            className="header-fade relative z-10 text-sm font-bold tracking-tight"
+            className="header-fade relative z-10 py-2 text-sm font-bold tracking-tight"
             data-intro-fade=""
             onClick={() => setOpen(false)}
           >
@@ -60,7 +62,7 @@ export function Header() {
             <ul className="flex gap-8 text-sm">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="link-roll text-fg/80 hover:text-fg">
+                  <Link href={item.href} className="link-roll inline-block py-1.5 text-fg/80 hover:text-fg">
                     <RollText>{item.label}</RollText>
                   </Link>
                 </li>

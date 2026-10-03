@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/data/site";
 import { RollText } from "@/components/ui/Button";
 import { SpringWordmark } from "@/components/anime/SpringWordmark";
+import { MotionToggle } from "@/components/motion/MotionToggle";
 
 const links = [
   { label: "Instagram", href: site.socials.instagram, external: true },
@@ -29,13 +30,13 @@ export function Footer() {
                   href={link.href}
                   target={link.href.startsWith("http") ? "_blank" : undefined}
                   rel="noreferrer"
-                  className="link-roll inline-flex items-center gap-2"
+                  className="link-roll inline-flex items-center gap-2 py-1"
                 >
                   <RollText>{link.label}</RollText>
                   <span className="arrow text-muted">↗</span>
                 </a>
               ) : (
-                <Link href={link.href} className="link-roll inline-flex">
+                <Link href={link.href} className="link-roll inline-flex py-1">
                   <RollText>{link.label}</RollText>
                 </Link>
               )}
@@ -51,6 +52,7 @@ export function Footer() {
 
       <div className="label flex flex-wrap justify-between gap-4 border-t border-line py-6 text-muted">
         <span>© 2026 Welva Studio</span>
+        <MotionToggle />
         <span>Diseñado y desarrollado en casa</span>
       </div>
     </footer>
