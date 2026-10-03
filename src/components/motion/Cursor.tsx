@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 
-type CursorState = "default" | "hover" | "view" | "hidden";
+type CursorState = "default" | "hover" | "view" | "drag" | "hidden";
 
 export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
@@ -58,7 +58,8 @@ export function Cursor() {
 
   if (!enabled) return null;
 
-  const ringSize = { default: 36, hover: 72, view: 104, hidden: 0 }[state];
+  const ringSize = { default: 36, hover: 72, view: 104, drag: 88, hidden: 0 }[state];
+  const label = state === "view" ? "View" : state === "drag" ? "Drag" : "";
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[100]">
@@ -69,7 +70,7 @@ export function Cursor() {
       >
         <div
           className={`flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full transition-[width,height,background-color,border-color,opacity] duration-500 ease-out-expo ${
-            state === "view"
+            state === "view" || state === "drag"
               ? "border border-transparent bg-accent"
               : state === "hover"
                 ? "border border-transparent bg-white mix-blend-difference"
@@ -79,10 +80,10 @@ export function Cursor() {
         >
           <span
             className={`label text-accent-ink transition-opacity duration-300 ${
-              state === "view" ? "opacity-100" : "opacity-0"
+              label ? "opacity-100" : "opacity-0"
             }`}
           >
-            View
+            {label}
           </span>
         </div>
       </div>

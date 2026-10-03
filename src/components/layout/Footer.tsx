@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { site } from "@/data/site";
 import { RollText } from "@/components/ui/Button";
+import { SpringWordmark } from "@/components/anime/SpringWordmark";
 
 const links = [
   { label: "Instagram", href: site.socials.instagram, external: true },
@@ -43,13 +44,10 @@ export function Footer() {
         </ul>
       </div>
 
-      <div
-        aria-hidden
-        className="display mt-16 select-none whitespace-nowrap text-center text-[21vw] leading-[0.75] text-fg/[0.06]"
-        data-reveal=""
-      >
-        Welva
-      </div>
+      <SpringWordmark
+        text="Welva"
+        className="display mt-16 select-none whitespace-nowrap pt-[0.15em] text-center text-[21vw] leading-[0.75] text-fg/[0.08] transition-colors duration-700 hover:text-accent"
+      />
 
       <div className="label flex flex-wrap justify-between gap-4 border-t border-line py-6 text-muted">
         <span>© 2026 Welva Studio</span>

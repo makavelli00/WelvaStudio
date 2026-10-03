@@ -1,3 +1,5 @@
+import { Scribble } from "@/components/anime/Scribble";
+import { Stickers } from "@/components/anime/Stickers";
 import { SplitText } from "@/components/ui/SplitText";
 import { ProjectVisual } from "@/components/work/ProjectVisual";
 
@@ -37,7 +39,10 @@ export function About() {
           lines={[
             "Small",
             <span key="s" className="pl-[12vw]">studio.</span>,
-            <span key="b" className="text-accent">Big</span>,
+            <span key="b" className="relative inline-block text-accent">
+              Big
+              <Scribble className="-inset-x-[18%] -inset-y-[22%] h-[144%] w-[136%] text-fg" />
+            </span>,
             <span key="i" className="pl-[24vw]">ideas.</span>,
           ]}
         />
@@ -80,6 +85,8 @@ export function About() {
           </p>
         </div>
       </div>
+
+      <Stickers />
     </section>
   );
 }
