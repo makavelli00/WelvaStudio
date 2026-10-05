@@ -3,6 +3,8 @@
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { getLenis, INTRO_SEEN_KEY, markIntroDone, prefersReducedMotion } from "@/lib/motion";
+import { AnimatedLogo } from "@/components/brand/AnimatedLogo";
+import { Wordmark } from "@/components/brand/Wordmark";
 
 // Pantalla de carga inicial: contador + logo, después se retira hacia arriba.
 export function Preloader() {
@@ -51,12 +53,13 @@ export function Preloader() {
             rememberSeen();
           },
         })
-        .from(".pre-word", { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.08 })
+        // El logo se dibuja solo (AnimatedLogo, ~1,8 s); el contador va a su ritmo.
+        .from(".pre-word", { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.08 }, 0.5)
         .to(
           value,
           {
             n: 100,
-            duration: 1.4,
+            duration: 1.9,
             ease: "power2.inOut",
             onUpdate: () => {
               if (counter.current) counter.current.textContent = String(Math.round(value.n)).padStart(3, "0");
@@ -64,8 +67,9 @@ export function Preloader() {
           },
           0,
         )
-        .to(".pre-bar", { scaleX: 1, duration: 1.4, ease: "power2.inOut" }, 0)
+        .to(".pre-bar", { scaleX: 1, duration: 1.9, ease: "power2.inOut" }, 0)
         .to(".pre-word", { yPercent: -110, duration: 0.7, ease: "expo.in", stagger: 0.05 })
+        .to(".pre-logo", { scale: 0.85, opacity: 0, duration: 0.6, ease: "expo.in" }, "<")
         .to(el, { clipPath: "inset(0% 0% 100% 0%)", duration: 1, ease: "expo.inOut" }, "-=0.2")
         .add(markIntroDone, "-=0.55");
     }, el);
@@ -87,12 +91,12 @@ export function Preloader() {
         <span>Digital studio</span>
         <span>Est. 2026</span>
       </div>
-      <div className="display flex flex-wrap gap-x-[0.25em] text-[clamp(2.6rem,10vw,9rem)]">
+      <div className="flex flex-col items-center gap-6">
+        <div className="pre-logo">
+          <AnimatedLogo className="w-[min(62vw,340px)]" packets interactive={false} />
+        </div>
         <span className="overflow-hidden">
-          <span className="pre-word inline-block">Welva</span>
-        </span>
-        <span className="overflow-hidden">
-          <span className="pre-word inline-block text-[#c8ff3d]">Studio</span>
+          <Wordmark className="pre-word inline-block text-[clamp(2rem,6vw,4rem)]" />
         </span>
       </div>
       <div>
@@ -102,7 +106,7 @@ export function Preloader() {
             000
           </span>
         </div>
-        <div className="pre-bar h-px origin-left scale-x-0 bg-[#c8ff3d]" />
+        <div className="pre-bar h-px origin-left scale-x-0 bg-accent" />
       </div>
     </div>
   );

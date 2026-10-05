@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { nav, site } from "@/data/site";
 import { getLenis } from "@/lib/motion";
 import { Button, RollText } from "@/components/ui/Button";
+import { AnimatedLogo } from "@/components/brand/AnimatedLogo";
+import { Wordmark } from "@/components/brand/Wordmark";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,11 +53,13 @@ export function Header() {
         >
           <Link
             href="/#inicio"
-            className="header-fade relative z-10 py-2 text-sm font-bold tracking-tight"
+            className="header-fade relative z-10 flex items-center gap-2.5 py-1 text-base"
             data-intro-fade=""
+            aria-label="Welva Studio, inicio"
             onClick={() => setOpen(false)}
           >
-            WELVA<span className="text-accent">●</span>STUDIO
+            <AnimatedLogo compact trigger="intro" duration="short" className="h-7 w-[38px]" />
+            <Wordmark />
           </Link>
 
           <nav aria-label="Principal" className="header-fade hidden lg:block" data-intro-fade="">

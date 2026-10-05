@@ -3,6 +3,8 @@ import { site } from "@/data/site";
 import { RollText } from "@/components/ui/Button";
 import { SpringWordmark } from "@/components/anime/SpringWordmark";
 import { MotionToggle } from "@/components/motion/MotionToggle";
+import { AnimatedLogo } from "@/components/brand/AnimatedLogo";
+import { Wordmark } from "@/components/brand/Wordmark";
 
 const links = [
   { label: "Instagram", href: site.socials.instagram, external: true },
@@ -17,10 +19,9 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-line px-[clamp(1rem,3vw,2.5rem)] pt-16">
       <div className="grid gap-12 md:grid-cols-[1fr_auto]">
         <div>
-          <p className="text-sm font-bold">
-            WELVA<span className="text-accent">●</span>STUDIO
-          </p>
-          <p className="mt-3 max-w-xs text-fg/60">{site.tagline}</p>
+          <AnimatedLogo trigger="scroll" packets className="w-28 sm:w-36" title="Welva Studio" />
+          <Wordmark className="mt-5 block text-2xl" />
+          <p className="mt-2 max-w-xs text-fg/60">{site.tagline}</p>
         </div>
         <ul className="grid grid-cols-2 gap-x-12 gap-y-3 sm:grid-cols-3">
           {links.map((link) => (

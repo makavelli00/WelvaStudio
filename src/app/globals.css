@@ -6,7 +6,9 @@
   --muted: #8b887f;
   --line: rgb(238 236 229 / 0.12);
   --surface: #161614;
-  --accent: #c8ff3d;
+  /* Cian del logo de Welva Studio. */
+  --accent: #10e8e3;
+  --brand-navy: #1f437f;
   --accent-ink: #0b0b0a;
 }
 
@@ -117,6 +119,10 @@ body {
   }
   .js:not(.reduce-motion) .header-fade {
     opacity: 0;
+  }
+  /* El logo animado se oculta hasta que JS pone su estado inicial (sin dibujar). */
+  .js:not(.reduce-motion) [data-logo-anim]:not([data-ready]) {
+    visibility: hidden;
   }
   .js.intro-done:not(.reduce-motion) .header-fade {
     animation: header-in 1.2s var(--ease-out-expo) forwards;

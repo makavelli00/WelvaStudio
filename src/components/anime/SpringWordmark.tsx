@@ -4,7 +4,6 @@ import {
   animate,
   createScope,
   createSpring,
-  onScroll,
   splitText,
   stagger,
   type Scope,
@@ -24,12 +23,12 @@ export function SpringWordmark({ text, className = "" }: { text: string; classNa
     const scope: Scope = createScope({ root: el }).add(() => {
       const { chars } = splitText(el, { chars: { wrap: "clip" } });
 
-      animate(chars, {
+      const entrance = animate(chars, {
         y: ["100%", "0%"],
         duration: 1100,
         ease: "outExpo",
         delay: stagger(70),
-        autoplay: onScroll({ target: el, enter: "bottom-=10% top" }),
+        autoplay: false,
         // La máscara solo sirve para la entrada; después recortaría los saltos.
         onComplete: () => {
           chars.forEach((char: HTMLElement) => {
@@ -37,6 +36,18 @@ export function SpringWordmark({ text, className = "" }: { text: string; classNa
           });
         },
       });
+      // IntersectionObserver en vez de onScroll: también funciona si se salta
+      // directamente al final de la página.
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          entrance.play();
+          io.disconnect();
+        },
+        { threshold: 0.3 },
+      );
+      io.observe(el);
+      cleanups.push(() => io.disconnect());
 
       const bounce = createSpring({ stiffness: 260, damping: 9 });
       chars.forEach((char: HTMLElement, i: number) => {

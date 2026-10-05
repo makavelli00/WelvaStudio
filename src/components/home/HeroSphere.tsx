@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 
-const ACCENT = [200, 255, 61];
+// Cian de la marca (#10e8e3).
+const ACCENT = [16, 232, 227];
 
 // Esfera de partículas en canvas 2D que gira y reacciona al cursor.
 export function HeroSphere({ className = "" }: { className?: string }) {
