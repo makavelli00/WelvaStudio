@@ -10,6 +10,12 @@ export const BRAND = {
   gray: "#545453",
 };
 
+// Color de la W: degradado vertical del azul de la marca, más claro arriba
+// para que destaque sobre fondo oscuro y parezca iluminada desde arriba.
+export const W_GRADIENT = { top: "#6a9bff", bottom: "#2a55b0" };
+// Caras laterales de la W en 3D (de la cara frontal hacia el fondo).
+export const W_EXTRUSION = { near: "#1f437f", far: "#0a1630" };
+
 /** @typedef {{ x: number, y: number, r: number, hub?: boolean }} LogoNode */
 
 // Nodos: r = radio. "hub" son los vértices de la W.

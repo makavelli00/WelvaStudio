@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { SplitText } from "@/components/ui/SplitText";
 import { onIntroDone, prefersReducedMotion } from "@/lib/motion";
 import { HeroSphere } from "./HeroSphere";
+import { HeroLogo3D } from "@/components/brand/HeroLogo3D";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -68,14 +69,15 @@ export function Hero() {
       data-theme-section="dark"
       className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden px-[clamp(1rem,3vw,2.5rem)] pb-10 pt-32"
     >
-      {/* Brillo de acento detrás de la esfera */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-[-10%] top-[5%] h-[70vmin] w-[70vmin] rounded-full bg-accent/10 blur-[120px]"
-      />
-      <HeroSphere
-        className="hero-sphere pointer-events-none absolute right-[-25%] top-[8%] h-[75vmin] w-[75vmin] sm:right-[-6%] sm:top-[10%] sm:h-[80vmin] sm:w-[80vmin] lg:right-[4%]"
-      />
+      {/* Esfera de partículas y logo 3D: en móvil centrados arriba, en escritorio a la derecha. */}
+      <div className="hero-visual absolute left-1/2 top-[7%] h-[84vw] w-[84vw] -translate-x-1/2 sm:left-auto sm:right-[1%] sm:top-[5%] sm:h-[58vmin] sm:w-[58vmin] sm:translate-x-0 lg:right-[3%] lg:top-[2%] lg:h-[72vmin] lg:w-[72vmin]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-[10%] rounded-full bg-accent/10 blur-[120px]"
+        />
+        <HeroSphere className="hero-sphere pointer-events-none absolute inset-0 h-full w-full" />
+        <HeroLogo3D className="absolute left-1/2 top-[44%] aspect-[300/220] w-[64%] -translate-x-1/2 -translate-y-1/2" />
+      </div>
 
       <div className="relative">
         <p className="hero-reveal label mb-6 flex items-center gap-3 text-muted" data-intro-fade="">

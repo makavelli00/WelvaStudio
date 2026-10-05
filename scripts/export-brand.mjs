@@ -13,6 +13,7 @@ import {
   NODES,
   PRIMARY,
   STROKE,
+  W_GRADIENT,
   segmentPath,
 } from "../src/components/brand/geometry.mjs";
 
@@ -31,19 +32,26 @@ function mark({ color, accent, compact = false, background, padding = 0, radius 
 
   const lines = (segs, width) =>
     segs.map((s) => `<path d="${segmentPath(s)}" stroke-width="${width}"/>`).join("");
+  // La W y sus vértices van en el degradado azul; el resto de nodos en el color de la red.
   const circles = nodes
-    .map((n) => `<circle cx="${n.x}" cy="${n.y}" r="${+(compact ? n.r * COMPACT_NODE_SCALE : n.r).toFixed(2)}"/>`)
+    .map(
+      (n) =>
+        `<circle cx="${n.x}" cy="${n.y}" r="${+(compact ? n.r * COMPACT_NODE_SCALE : n.r).toFixed(2)}"${n.hub ? ' fill="url(#w)"' : ""}/>`,
+    )
     .join("");
+  const primary = PRIMARY.map(
+    (s) => `<path d="${segmentPath(s)}" stroke="url(#w)" stroke-width="${stroke.primary}"/>`,
+  ).join("");
   const knock = ["left", "right"]
     .map((side) => `<path d="${BRACKETS[side]}" fill="none" stroke="#000" stroke-width="${stroke.knockout}"/>`)
     .join("");
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vw} ${vh}" role="img" aria-label="${title}">
 <title>${title}</title>
-<defs><mask id="k" maskUnits="userSpaceOnUse" x="-20" y="-20" width="340" height="260"><rect x="-20" y="-20" width="340" height="260" fill="#fff"/>${knock}</mask></defs>
+<defs><linearGradient id="w" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="210"><stop offset="0" stop-color="${W_GRADIENT.top}"/><stop offset="1" stop-color="${W_GRADIENT.bottom}"/></linearGradient><mask id="k" maskUnits="userSpaceOnUse" x="-20" y="-20" width="340" height="260"><rect x="-20" y="-20" width="340" height="260" fill="#fff"/>${knock}</mask></defs>
 ${background ? `<rect width="${vw}" height="${vh}" rx="${radius}" fill="${background}"/>` : ""}
 <g transform="translate(${ox} ${oy})">
-<g mask="url(#k)"><g fill="none" stroke="${color}" stroke-linecap="round">${lines(mesh, stroke.mesh)}${lines(PRIMARY, stroke.primary)}</g><g fill="${color}">${circles}</g></g>
+<g mask="url(#k)"><g fill="none" stroke="${color}" stroke-linecap="round">${lines(mesh, stroke.mesh)}${primary}</g><g fill="${color}">${circles}</g></g>
 <g fill="none" stroke="${accent}" stroke-width="${stroke.bracket}" stroke-linejoin="miter"><path d="${BRACKETS.left}"/><path d="${BRACKETS.right}"/></g>
 </g>
 </svg>
