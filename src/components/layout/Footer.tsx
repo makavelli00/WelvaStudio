@@ -19,11 +19,11 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-line px-[clamp(1rem,3vw,2.5rem)] pt-16">
       <div className="grid gap-12 md:grid-cols-[1fr_auto]">
         <div>
-          <AnimatedLogo trigger="scroll" packets className="w-44 sm:w-60" title="Welva Studio" />
-          <Wordmark className="mt-6 block text-4xl sm:text-5xl" />
+          <AnimatedLogo trigger="scroll" packets maxPackets={8} className="w-60 sm:w-80" title="Welva Studio" />
+          <Wordmark className="mt-6 block text-5xl sm:text-6xl" />
           <p className="mt-2 max-w-xs text-fg/60">{site.tagline}</p>
         </div>
-        <ul className="grid grid-cols-2 gap-x-12 gap-y-3 sm:grid-cols-3">
+        <ul className="grid content-start grid-cols-2 gap-x-12 gap-y-3 sm:grid-cols-3">
           {links.map((link) => (
             <li key={link.label}>
               {link.external ? (

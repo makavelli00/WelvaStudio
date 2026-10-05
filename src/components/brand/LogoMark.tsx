@@ -15,18 +15,30 @@ type Props = {
   // Id único por instancia (useId): lo necesita la máscara del recorte.
   id: string;
   className?: string;
-  // Variante simplificada para tamaños pequeños (≤ 64 px).
+  // Variante simplificada para tamaños muy pequeños (favicon).
   compact?: boolean;
+  // Multiplica grosores y nodos de la variante completa: >1 para que la red
+  // siga leyéndose a tamaño cabecera.
+  weight?: number;
   title?: string;
 };
 
 // Logo vectorial: la red usa currentColor y los corchetes el color de acento.
 // Una máscara recorta la red alrededor de los corchetes, así funciona sobre
-// cualquier fondo. Las clases logo-* son los ganchos de AnimatedLogo.
-export function LogoMark({ id, className = "", compact = false, title }: Props) {
-  const stroke = compact ? COMPACT_STROKE : STROKE;
+// cualquier fondo. Las clases logo-* y data-node son los ganchos de AnimatedLogo.
+export function LogoMark({ id, className = "", compact = false, weight = 1, title }: Props) {
+  const base = compact ? COMPACT_STROKE : STROKE;
+  const w = compact ? 1 : weight;
+  const stroke = {
+    primary: base.primary * w,
+    mesh: base.mesh * w,
+    // Los corchetes crecen menos para no tapar la red.
+    bracket: base.bracket * (1 + (w - 1) * 0.5),
+    knockout: base.knockout * (1 + (w - 1) * 0.6),
+  };
   const mesh = compact ? COMPACT_MESH : MESH;
   const nodes = Object.entries(NODES).filter(([, n]) => !compact || n.hub);
+  const nodeScale = compact ? COMPACT_NODE_SCALE : w;
   const maskId = `${id}-knockout`;
 
   return (
@@ -66,10 +78,11 @@ export function LogoMark({ id, className = "", compact = false, title }: Props) 
           {nodes.map(([key, n]) => (
             <circle
               key={key}
+              data-node={key}
               className="logo-node"
               cx={n.x}
               cy={n.y}
-              r={compact ? n.r * COMPACT_NODE_SCALE : n.r}
+              r={n.r * nodeScale}
               style={{ transformOrigin: `${n.x}px ${n.y}px` }}
             />
           ))}

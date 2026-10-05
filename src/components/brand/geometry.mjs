@@ -29,6 +29,14 @@ export const NODES = {
   c: { x: 150, y: 116, r: 6.5 },
   ll: { x: 121, y: 160, r: 5.5 },
   lr: { x: 179, y: 160, r: 5.5 },
+  // Puntas extra de la corona.
+  tl: { x: 100, y: 30, r: 5 },
+  tr: { x: 200, y: 30, r: 5 },
+  // Estaciones sobre las patas exteriores de la W (están sobre la línea).
+  o1l: { x: 42, y: 80, r: 4.5 },
+  o1r: { x: 258, y: 80, r: 4.5 },
+  ol: { x: 88, y: 162, r: 4.5 },
+  or: { x: 212, y: 162, r: 4.5 },
 };
 
 // La W principal (trazo grueso), en orden de dibujo desde el centro.
@@ -61,6 +69,32 @@ export const MESH = [
   ["ll", "lr"],
   ["sl", "ll"],
   ["sr", "lr"],
+  ["itl", "tl"],
+  ["itr", "tr"],
+  ["tl", "tc"],
+  ["tr", "tc"],
+  ["tl", "ul"],
+  ["tr", "ur"],
+  ["o1l", "itl"],
+  ["o1r", "itr"],
+  ["ol", "ll"],
+  ["or", "lr"],
+];
+
+// Grafo por el que corren los paquetes de datos: la red más la W, con las
+// patas exteriores partidas en tramos para que pasen por sus estaciones.
+export const GRAPH = [
+  ...MESH,
+  ["tc", "bl"],
+  ["tc", "br"],
+  ["otl", "o1l"],
+  ["o1l", "sl"],
+  ["sl", "ol"],
+  ["ol", "bl"],
+  ["otr", "o1r"],
+  ["o1r", "sr"],
+  ["sr", "or"],
+  ["or", "br"],
 ];
 
 // Corchetes de código < > (en cian).
@@ -83,6 +117,7 @@ export const COMPACT_MESH = [
   ["ur", "tc"],
 ];
 export const COMPACT_NODE_SCALE = 1.7;
+export const COMPACT_GRAPH = [...COMPACT_MESH, ...PRIMARY];
 
 /** @param {string[]} segment Par de ids de nodo [origen, destino]. */
 export const segmentPath = ([a, b]) =>
