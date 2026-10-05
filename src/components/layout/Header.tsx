@@ -53,12 +53,17 @@ export function Header() {
         >
           <Link
             href="/#inicio"
-            className="header-fade relative z-10 flex items-center gap-2.5 py-1 text-base"
+            className="header-fade relative z-10 flex items-center gap-3 py-1 text-xl sm:text-2xl"
             data-intro-fade=""
             aria-label="Welva Studio, inicio"
             onClick={() => setOpen(false)}
           >
-            <AnimatedLogo compact trigger="intro" duration="short" className="h-7 w-[38px]" />
+            <AnimatedLogo
+              compact
+              trigger="intro"
+              duration="short"
+              className="h-10 w-[55px] sm:h-12 sm:w-[65px]"
+            />
             <Wordmark />
           </Link>
 

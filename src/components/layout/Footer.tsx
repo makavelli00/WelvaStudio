@@ -19,8 +19,8 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-line px-[clamp(1rem,3vw,2.5rem)] pt-16">
       <div className="grid gap-12 md:grid-cols-[1fr_auto]">
         <div>
-          <AnimatedLogo trigger="scroll" packets className="w-28 sm:w-36" title="Welva Studio" />
-          <Wordmark className="mt-5 block text-2xl" />
+          <AnimatedLogo trigger="scroll" packets className="w-44 sm:w-60" title="Welva Studio" />
+          <Wordmark className="mt-6 block text-4xl sm:text-5xl" />
           <p className="mt-2 max-w-xs text-fg/60">{site.tagline}</p>
         </div>
         <ul className="grid grid-cols-2 gap-x-12 gap-y-3 sm:grid-cols-3">
